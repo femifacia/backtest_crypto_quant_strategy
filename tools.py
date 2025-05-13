@@ -3,6 +3,21 @@ from plotly.subplots import make_subplots
 import pandas as pd
 import plotly.io as pio
 
+def plot_asset_candle(df : pd.DataFrame, last_n_points=None,title='Candlestick chart', xaxis_title='Date', yaxis_title='Price'):
+    if not (last_n_points is None):
+        df = df.iloc[-last_n_points:]
+
+    fig = go.Figure(data=[go.Candlestick(
+        x=df.index,
+        open=df['open'],
+        high=df['high'],
+        low=df['low'],
+        close=df['close']
+    )])
+
+    fig.update_layout(title=title, xaxis_title=xaxis_title, yaxis_title=yaxis_title)
+    fig.show()
+
 def load_plotly_theme():
 
     green_plot = go.layout.Template()
