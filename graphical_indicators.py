@@ -4,6 +4,89 @@ from scipy.signal import argrelextrema
 import plotly.graph_objects as go
 
 
+import pandas as pd
+import numpy as np
+from scipy.signal import argrelextrema
+import matplotlib.pyplot as plt
+from itertools import combinations
+
+
+def print_trend_lines(trendlines, df):
+    fig = go.Figure(data=[go.Candlestick(
+        x=df.index,
+        open=df['open'],
+        high=df['high'],
+        low=df['low'],
+        close=df['close'],
+        name="Candles"
+    )])
+
+    # Ajout des supports en vert (dashed)
+        
+
+    for i, j, k, coeffs in trendlines:
+        x_vals = np.array([df.index.get_loc(i), df.index.get_loc(k)])
+#        print(x_vals)
+        y_vals = np.poly1d(coeffs)(x_vals)
+        x_vals = np.array([i, k])
+        fig.add_shape(
+                type='line',
+                x0=x_vals[0],
+                y0 = y_vals[0],
+                x1=x_vals[1],
+                y1 = y_vals[1],
+                line=dict(color='cyan', dash='dash'),
+                name="Support"
+            )
+        #plt.plot(x_vals, y_vals, '--', label=f'Trendline {i}-{j}-{k}')
+
+    fig.update_layout(
+            title='Candlestick with Trendlines',
+            xaxis_title='Date',
+            yaxis_title='Price',
+            template='plotly_dark'
+        )
+
+    fig.show()
+
+def find_trendlines(df, order=5, tolerance=30, tresh=0.5, plot_enabled=True):
+    lows_idx = argrelextrema(df['low'].values, np.less_equal, order=order)[0]
+    lows = df.iloc[lows_idx][['low']]
+
+    valid_trendlines = []
+
+    for i, j, k in combinations(lows.index, 3):
+        x = np.array([df.index.get_loc(i), df.index.get_loc(k)])  # positions numériques
+        y = np.array([df['low'].loc[i], df['low'].loc[k]])
+
+
+        # Droite entre i et k
+        coeffs = np.polyfit(x, y, 1)  # y = mx + b
+        line = np.poly1d(coeffs)
+
+        # Vérifie que le point j est bien proche de la ligne (tolérance)
+        j_pos = df.index.get_loc(j)
+        if abs(df['low'][j] - line(j_pos)) > tolerance:
+
+            continue
+
+        # Vérifie que les prix ne passent PAS sous la ligne entre i et k
+        print(i,"fel",k)
+        segment = df.loc[i:k]
+        for idx in segment.index:
+            x_idx = df.index.get_loc(idx)
+            if (df['low'][idx] - line(x_idx) ) > tresh:
+
+                break
+            else:
+                valid_trendlines.append((i, j, k, coeffs))
+
+    if plot_enabled:
+        print_trend_lines(valid_trendlines, df)
+
+    return valid_trendlines
+
+
 def detect_levels(df : pd.DataFrame, order=5):
     local_max = argrelextrema(df['high'].values, np.greater_equal, order=order)[0]
     local_min = argrelextrema(df['low'].values, np.less_equal, order=order)[0]
