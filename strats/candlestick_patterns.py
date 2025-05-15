@@ -18,7 +18,7 @@ class candlestick_patterns(strategy):
 
     def describe(self):
         super().describe()
-        text = """ """
+        text = """ Detects recently completed Candlestick patterns of the Engulfing or Hammer & Shooting star type"""
         text += '\n'
 
         print(text)

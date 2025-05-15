@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 #import mplfinance as mpf
 import numpy as np
-from sklearn.linear_model import LinearRegression as linregress
+from scipy.stats import linregress
 import random
 from scipy.signal import argrelextrema
 from strategy import strategy
