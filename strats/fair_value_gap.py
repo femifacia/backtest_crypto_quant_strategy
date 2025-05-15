@@ -16,6 +16,13 @@ class FairValueGap(strategy):
     def load_data(self):
         return super().load_data()
     
+    def describe(self):
+        super().describe()
+        text = """Detects the largest recent candle, uses the Low/High of the next candle and the High/Low of the previous candle to define a resistance/support level. """
+        text += '\n'
+
+        print(text)
+    
     #strategie de fair value Gap
     def strat_FairValue_Gap(self, df):
         # tous ces parametres ont été optimisés par un process de machine learning

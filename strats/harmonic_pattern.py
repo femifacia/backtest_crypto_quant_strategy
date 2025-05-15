@@ -16,6 +16,13 @@ class harmonic_pattern(strategy):
     def load_data(self):
         return super().load_data()
     
+    def describe(self):
+        super().describe()
+        text = """ Detects Crab, Butterfly, Bat or Gartley Harmonic patterns that have just ended"""
+        text += '\n'
+
+        print(text)
+    
 
     #strategie qui envoi un ordre de Buy ou de Sell si il identifie un harmonic patterns
     def find_harmonic_pattern(self, df, lookback=100, tail=5):

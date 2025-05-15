@@ -5,11 +5,11 @@ from binance.client import Client
 import pandas as pd
 from datetime import datetime
 
-# 🔑 Si tu n'utilises pas d'API key privée, tu peux laisser vide :
+# Si tu n'utilises pas d'API key privée, tu peux laisser vide :
 client = Client(api_key='', api_secret='')
 
 def get_binance_ticker_sdk(symbol="BTCUSDT", interval="1h", start_str="2024-03-01"):
-    # 🔁 Récupère toutes les k-lines depuis la date spécifiée
+    # Récupère toutes les k-lines depuis la date spécifiée
     klines = client.get_historical_klines(
         symbol=symbol,
         interval=interval,

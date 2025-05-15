@@ -15,6 +15,13 @@ class candlestick_patterns(strategy):
 
     def load_data(self):
         return super().load_data()
+
+    def describe(self):
+        super().describe()
+        text = """ """
+        text += '\n'
+
+        print(text)
     
     #strategie qui envoi un ordre de Buy ou de Sell si il identifie un candlestick patterns
     def detect_candlestick_patterns(self, df, tail=5):

@@ -15,6 +15,13 @@ class breakout_patterns(strategy):
 
     def load_data(self):
         return super().load_data()
+
+    def describe(self):
+        super().describe()
+        text = """ Detects a breakout pattern of type Triangle, Flag, Wedge or Rectangle that has just ended."""
+        text += '\n'
+
+        print(text)
     
     #strategie qui envoi un ordre de Buy ou de Sell si il identifie un breakout patterns
     def detect_breakout_patterns(self, df, window=30, tail=5):

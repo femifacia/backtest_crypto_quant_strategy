@@ -16,6 +16,12 @@ class reversal_pattern(strategy):
     def load_data(self):
         return super().load_data()
     
+    def describe(self):
+        super().describe()
+        text = """Detects recently completed reversal patterns such as Head & Shoulders, Triple Top, Triple Bottom, Double Top, Double Bottom, Cups & handles"""
+
+        print(text)
+    
     #strategie qui envoi un ordre de Buy ou de Sell si il identifie un reversal patterns
     def detect_final_reversal_pattern(self, df, order=5, tolerance=0.03, tail=5):
         df = df.copy()

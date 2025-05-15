@@ -7,6 +7,12 @@ class fibonacci_horizontale(strategy):
         super().__init__()
         self.name = 'fibonacci horizontale'
 
+    def describe(self):
+        super().describe()
+        text = """Detects a recent swing high and swing low. 
+        Takes a position if resistance at 0.618 or support at 0.382 is reached for the first time, without having reached a cancellation level in the meantime."""
+        print(text)
+
     def load_data(self):
         return super().load_data()
     
