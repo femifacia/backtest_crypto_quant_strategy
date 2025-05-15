@@ -11,7 +11,14 @@ import matplotlib.pyplot as plt
 from itertools import combinations
 
 
-def print_trend_lines(trendlines, df):
+def print_trend_lines(trendlines, df : pd.DataFrame):
+    """print trend lines
+
+    Args:
+        trendlines (_type_): _description_
+        df (pd.DataFrame): _description_
+    """
+
     fig = go.Figure(data=[go.Candlestick(
         x=df.index,
         open=df['open'],
@@ -38,7 +45,6 @@ def print_trend_lines(trendlines, df):
                 line=dict(color='cyan', dash='dash'),
                 name="Support"
             )
-        #plt.plot(x_vals, y_vals, '--', label=f'Trendline {i}-{j}-{k}')
 
     fig.update_layout(
             title='Candlestick with Trendlines',
@@ -50,6 +56,18 @@ def print_trend_lines(trendlines, df):
     fig.show()
 
 def find_trendlines(df, order=5, tolerance=30, tresh=0.5, plot_enabled=True):
+    """Find trendlines
+
+    Args:
+        df (_type_): _description_
+        order (int, optional): _description_. Defaults to 5.
+        tolerance (int, optional): _description_. Defaults to 30.
+        tresh (float, optional): _description_. Defaults to 0.5.
+        plot_enabled (bool, optional): _description_. Defaults to True.
+
+    Returns:
+        _type_: _description_
+    """
     lows_idx = argrelextrema(df['low'].values, np.less_equal, order=order)[0]
     lows = df.iloc[lows_idx][['low']]
 
@@ -88,6 +106,15 @@ def find_trendlines(df, order=5, tolerance=30, tresh=0.5, plot_enabled=True):
 
 
 def detect_levels(df : pd.DataFrame, order=5):
+    """Detect levels for horizontales support
+
+    Args:
+        df (pd.DataFrame): _description_
+        order (int, optional): _description_. Defaults to 5.
+
+    Returns:
+        _type_: _description_
+    """
     local_max = argrelextrema(df['high'].values, np.greater_equal, order=order)[0]
     local_min = argrelextrema(df['low'].values, np.less_equal, order=order)[0]
 
@@ -107,6 +134,13 @@ def filter_levels(levels, threshold=0.01):
     return filtered
 
 def plot_horizontal_supports_resistances(df : pd.DataFrame, threshold=0.01):
+    """Plot horizontal support resistances
+
+    Args:
+        df (pd.DataFrame): _description_
+        threshold (float, optional): _description_. Defaults to 0.01.
+    """
+
     support_raw, resistance_raw = detect_levels(df, order=5)
 
     # 2. Filtrage (1% d'écart minimum)

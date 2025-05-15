@@ -4,6 +4,15 @@ import pandas as pd
 import plotly.io as pio
 
 def plot_asset_candle(df : pd.DataFrame, last_n_points=None,title='Candlestick chart', xaxis_title='Date', yaxis_title='Price'):
+    """Plot a bench candle style
+
+    Args:
+        df (pd.DataFrame): _description_
+        last_n_points (_type_, optional): _description_. Defaults to None.
+        title (str, optional): _description_. Defaults to 'Candlestick chart'.
+        xaxis_title (str, optional): _description_. Defaults to 'Date'.
+        yaxis_title (str, optional): _description_. Defaults to 'Price'.
+    """
     if not (last_n_points is None):
         df = df.iloc[-last_n_points:]
 
@@ -19,6 +28,8 @@ def plot_asset_candle(df : pd.DataFrame, last_n_points=None,title='Candlestick c
     fig.show()
 
 def load_plotly_theme():
+    """load plotly code
+    """
 
     green_plot = go.layout.Template()
     #green_plot.layout.update(font=dict(color="white", size=10, family='../NHaasGroteskDSPro-95Blk.otf'))
@@ -49,6 +60,8 @@ def load_plotly_theme():
 def plot_strategy_and_benchmark(strat : pd.Series, benchmark : pd.Series, legend_strat_title="strat", legend_benchmark_title="benchmark", width=1800, height=600, is_strat_secondary_y_axis=False
                                 ,title="Sah", x_axis_title='Time', y_axis_title="Performance", y_axis_secondary_title="<b>performance</b> strat", has_to_save=False,save_path="./strat",save_extension='png'):
 
+    """plot strategy and benchmark
+    """
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     
 
@@ -92,9 +105,26 @@ def plot_strategy_and_benchmark(strat : pd.Series, benchmark : pd.Series, legend
         fig.write_image(save_path,format=save_extension, width=width, height=height)
     fig.show()
 
-def save_strategy_and_benchmark(strat : pd.Series, benchmark : pd.Series, legend_strat_title="strat", legend_benchmark_title="benchmark", width=1800, height=600, is_strat_secondary_y_axis=False
-                                ,title="Sah", x_axis_title='Time', y_axis_title="Performance", y_axis_secondary_title="<b>performance</b> strat", has_to_save=False,save_path="./strat",save_extension='png'):
+def save_strategy_and_benchmark(strat : pd.Series, benchmark : pd.Series, legend_strat_title="strat", legend_benchmark_title="benchmark", width=1800, height=600, is_strat_secondary_y_axis=False,title="Sah",
+                                 x_axis_title='Time', y_axis_title="Performance", y_axis_secondary_title="<b>performance</b> strat", has_to_save=False,save_path="./strat",save_extension='png'):
+    """save the strategy and the benchmark
 
+    Args:
+        strat (pd.Series): _description_
+        benchmark (pd.Series): _description_
+        legend_strat_title (str, optional): _description_. Defaults to "strat".
+        legend_benchmark_title (str, optional): _description_. Defaults to "benchmark".
+        width (int, optional): _description_. Defaults to 1800.
+        height (int, optional): _description_. Defaults to 600.
+        is_strat_secondary_y_axis (bool, optional): _description_. Defaults to False.
+        title (str, optional): _description_. Defaults to "Sah".
+        x_axis_title (str, optional): _description_. Defaults to 'Time'.
+        y_axis_title (str, optional): _description_. Defaults to "Performance".
+        y_axis_secondary_title (str, optional): _description_. Defaults to "<b>performance</b> strat".
+        has_to_save (bool, optional): _description_. Defaults to False.
+        save_path (str, optional): _description_. Defaults to "./strat".
+        save_extension (str, optional): _description_. Defaults to 'png'.
+    """
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     
 

@@ -2,6 +2,14 @@ import numpy as np
 
 
 def compute_sharpe(strat):
+    """compute sharpe ratio
+
+    Args:
+        strat (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     sharpe = (strat.mean() * 365 * 24) / (strat.std() * np.sqrt(365 * 24))
     return sharpe
 
@@ -71,6 +79,19 @@ def backtest_from_strat(strat_obj, bench, start=None, end=None, params={}, bench
 
 
 def backtest_from_func(func, bench, start=None, end=None, params={}, bench_target='hourly_return_open', name="strat", plot_enable=True, trading_fees=0.002):
+    """backtest from a function
+
+    Args:
+        func (_type_): _description_
+        bench (_type_): _description_
+        start (_type_, optional): _description_. Defaults to None.
+        end (_type_, optional): _description_. Defaults to None.
+        params (dict, optional): _description_. Defaults to {}.
+        bench_target (str, optional): _description_. Defaults to 'hourly_return_open'.
+        name (str, optional): _description_. Defaults to "strat".
+        plot_enable (bool, optional): _description_. Defaults to True.
+        trading_fees (float, optional): _description_. Defaults to 0.002.
+    """
     signal = func(bench, start=start, end=end, **params)
     strat = signal * bench[bench_target]
     strat -= (signal.diff().abs() * trading_fees)

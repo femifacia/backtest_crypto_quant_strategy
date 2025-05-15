@@ -30,7 +30,7 @@ class harmonic_pattern(strategy):
         signal = None
         pattern_points = []
 
-        def approx(value, target, tolerance=0.05):
+        def approx(value, target, tolerance=5):
             return abs(value - target) <= tolerance * target
 
         for i in range(len(pivots) - 4):
